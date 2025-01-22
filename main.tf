@@ -2,14 +2,14 @@
 resource "aws_lb" "main" {
   name               = local.lb_name
   internal           = var.internal
-  load_balancer_type = var.lb_type
+#   load_balancer_type = var.lb_type
   security_groups    = [aws_security_group.main.id]
   subnets            = var.subnets
   tags               = merge(local.tags, { Name = "${var.env}-alb" })
 }
 
 resource "aws_lb_listener" "main" {
-  load_balancer_arn = aws_lb.main.arn
+#   load_balancer_arn = aws_lb.main.arn
   port              = var.internal ? 80 : 443
   protocol          = var.internal ? "HTTP" : "HTTPS"
   ssl_policy        = var.internal ? null : "ELBSecurityPolicy-2016-08"
@@ -27,7 +27,7 @@ resource "aws_lb_listener" "main" {
 
 resource "aws_lb_listener" "frontend" {
   count             = var.internal ? 0 : 1
-  load_balancer_arn = aws_lb.main.arn
+#   load_balancer_arn = aws_lb.main.arn
   port              = "80"
   protocol          = "HTTP"
 
